@@ -4,31 +4,31 @@ var players = [];
 var ground;
 
 function handleTick(event) {
-    if (!event.paused) {
-      players.forEach(function(player){
-        updatePlayer(player);
-      });
-    }
-    stage.update();
+  if (!event.paused) {
+    players.forEach(function(player){
+      updatePlayer(player);
+    });
+  }
+  stage.update();
 }
 
 function init() {
-    canvas = document.getElementById("canvas");
-    canvas.width  = (window.innerWidth*.7)*2;
-    canvas.height = (window.innerHeight)*2;
-    canvas.style.width = (canvas.width / 2) + "px";
-    canvas.style.height = (canvas.height / 2) + "px";
+  canvas = document.getElementById("canvas");
+  canvas.width  = (window.innerWidth*.7)*2;
+  canvas.height = (window.innerHeight)*2;
+  canvas.style.width = (canvas.width / 2) + "px";
+  canvas.style.height = (canvas.height / 2) + "px";
 
-    //stage setup
-    stage = new createjs.Stage("canvas");
-    addGround();
-    addPlayer(200,200);
-    addPlayer(500,250);
-    //game loop reference
-    createjs.Ticker.addEventListener("tick", handleTick);
-    createjs.Ticker.framerate = 60;
+  //stage setup
+  stage = new createjs.Stage("canvas");
+  addGround();
+  addPlayer(200,200, true, false);
+  addPlayer(500,250, true, true);
+  //game loop reference
+  createjs.Ticker.addEventListener("tick", handleTick);
+  createjs.Ticker.framerate = 60;
 
-    stage.update();
+  stage.update();
 }
 
 function addGround(){
@@ -39,14 +39,15 @@ function addGround(){
   stage.addChild(ground);
 }
 
-function addPlayer(x , y){
+function addPlayer(x , y, overrideButtons, overrideIsComputer){
 
   var playerShape = new createjs.Container();
 
   playerShape.x = x;
   playerShape.y = y;
-
+  //player data
   var player = {
+    isComputer: false,
     shape: playerShape,
     hp: 100,
     velX: 0,
@@ -54,20 +55,39 @@ function addPlayer(x , y){
     grounded : false,
     legs : null,
     legMoveNum: 0,
-    legMoveDir : false
+    legMoveDir : false,
+    color:null
   };
+
+  var name = document.getElementById("name");
+  var brightness = document.getElementById("brightness");
+  var color = createjs.Graphics.getRGB(brightness.value, brightness.value, brightness.value, 1);
+  player.color = color;
+  var isComputer = document.getElementById("isComputer");
+  player.isComputer = overrideButtons ? overrideIsComputer : isComputer.value;
   //player model start
 
+  //nameplate
+  if(name.value == "" || overrideButtons){
+    name.value = player.isComputer ? "CPU" : "HMN";
+  }
+  var namePlate = new createjs.Text(name.value, "50px Arial", "white");
+  namePlate.y = - 120;
+  namePlate.textBaseline = "alphabetic";
+  namePlate.x -= namePlate.getBounds().width /2;
+  playerShape.addChild(namePlate);
+  
+  //body
   var head = new createjs.Shape();
-  head.graphics.beginFill("LightGrey").drawCircle(0, 0, 100);
+  head.graphics.beginFill(color).drawCircle(0, 0, 100);
   playerShape.addChild(head);
 
   var body = new createjs.Shape();
-  body.graphics.setStrokeStyle(20).beginStroke("LightGrey").moveTo(0, 100).lineTo(0, 250).endStroke();
+  body.graphics.setStrokeStyle(20).beginStroke(color).moveTo(0, 100).lineTo(0, 250).endStroke();
   playerShape.addChild(body);
 
   var legs = new createjs.Shape();
-  legs.graphics.setStrokeStyle(20).beginStroke("LightGrey").moveTo(0, 250).lineTo(50, 400).moveTo(0, 250).lineTo(-50, 400).endStroke();
+  legs.graphics.setStrokeStyle(20).beginStroke(color).moveTo(0, 250).lineTo(50, 400).moveTo(0, 250).lineTo(-50, 400).endStroke();
   playerShape.addChild(legs);
   player.legs = legs;
 

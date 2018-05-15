@@ -1,6 +1,6 @@
 var walkSpeed = 1;
 var legMoveNumLimit = 50;
-var grav = .1;
+var grav = .2;
 
 //cosmetic functions
 function moveLegs(player){
@@ -18,7 +18,7 @@ function moveLegs(player){
       player.legMoveDir = true;
     }
   }
-  player.legs.graphics.clear().setStrokeStyle(20).beginStroke("LightGrey").moveTo(0, 250).lineTo(50 - player.legMoveNum, 400).moveTo(0, 250).lineTo(-50 + player.legMoveNum, 400).endStroke();
+  player.legs.graphics.clear().setStrokeStyle(20).beginStroke(player.color).moveTo(0, 250).lineTo(50 - player.legMoveNum, 400).moveTo(0, 250).lineTo(-50 + player.legMoveNum, 400).endStroke();
 }
 
 function updatePlayer(player){
