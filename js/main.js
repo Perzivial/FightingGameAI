@@ -1,15 +1,58 @@
+var canvas;
+var stage;
+var players = [];
+var ground;
+
+var tkr = new Object;
+
+function handleTick(event) {
+    if (!event.paused) {
+
+    }
+}
+
 function init() {
-    var canvas = document.getElementById("canvas");
+    canvas = document.getElementById("canvas");
     canvas.width  = (window.innerWidth*.7)*2;
     canvas.height = (window.innerHeight*.7)*2;
     canvas.style.width = (canvas.width / 2) + "px";
     canvas.style.height = (canvas.height / 2) + "px";
 
-    var stage = new createjs.Stage("canvas");
-    var circle = new createjs.Shape();
-    circle.graphics.beginFill("LightGrey").drawCircle(0, 0, 100);
-    circle.x = 200;
-    circle.y = 200;
-    stage.addChild(circle);
+    stage = new createjs.Stage("canvas");
+    addGround();
+    addPlayer(200,200);
+    addPlayer(500,200);
+
+    createjs.Ticker.addEventListener("tick", handleTick);
+
     stage.update();
-  }
+}
+
+function addGround(){
+  ground = new createjs.Shape();
+  ground.graphics.beginFill("grey").drawRect(0,(canvas.height/4)*3,canvas.width, (canvas.height/4));
+  stage.addChild(ground);
+}
+
+function addPlayer(x , y){
+
+  var playerShape = new createjs.Container();
+
+  playerShape.x = x;
+  playerShape.y = y;
+
+  var player = {
+    shape: playerShape,
+    hp: 100,
+    velX: 0,
+    velY: 0
+  };
+
+  var circle = new createjs.Shape();
+  circle.graphics.beginFill("LightGrey").drawCircle(0, 0, 100);
+
+  playerShape.addChild(circle);
+  players.push(player);
+
+  stage.addChild(playerShape);
+}
