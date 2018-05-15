@@ -14,7 +14,7 @@ function handleTick(event) {
 function init() {
     canvas = document.getElementById("canvas");
     canvas.width  = (window.innerWidth*.7)*2;
-    canvas.height = (window.innerHeight*.7)*2;
+    canvas.height = (window.innerHeight)*2;
     canvas.style.width = (canvas.width / 2) + "px";
     canvas.style.height = (canvas.height / 2) + "px";
 
@@ -30,7 +30,7 @@ function init() {
 
 function addGround(){
   ground = new createjs.Shape();
-  ground.graphics.beginFill("grey").drawRect(0,(canvas.height/4)*3,canvas.width, (canvas.height/4));
+  ground.graphics.beginFill("grey").drawRect(0,(canvas.height/5)*4,canvas.width, (canvas.height/5));
   stage.addChild(ground);
 }
 
