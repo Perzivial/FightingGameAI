@@ -21,14 +21,20 @@ function init() {
 
   //stage setup
   stage = new createjs.Stage("canvas");
-  addGround();
-  addPlayer(200,200, true, false);
-  addPlayer(500,250, true, true);
+  setupStage();
   //game loop reference
   createjs.Ticker.addEventListener("tick", handleTick);
   createjs.Ticker.framerate = 60;
 
   stage.update();
+}
+
+function setupStage(){
+  stage.removeAllChildren();
+  addGround();
+  players = [];
+  addPlayer(200,ground.y-400, true, false);
+  addPlayer(canvas.width-200,ground.y-400, true, true);
 }
 
 function addGround(){
@@ -60,11 +66,11 @@ function addPlayer(x , y, overrideButtons, overrideIsComputer){
   };
 
   var name = document.getElementById("name");
-  var brightness = document.getElementById("brightness");
-  var color = createjs.Graphics.getRGB(brightness.value, brightness.value, brightness.value, 1);
-  player.color = color;
   var isComputer = document.getElementById("isComputer");
   player.isComputer = overrideButtons ? overrideIsComputer : isComputer.value;
+  var brightness = overrideButtons ? (player.isComputer ? 50 : 240) : document.getElementById("brightness").value;
+  var color = createjs.Graphics.getRGB(brightness, brightness, brightness, 1);
+  player.color = color;
   //player model start
 
   //nameplate
@@ -76,7 +82,7 @@ function addPlayer(x , y, overrideButtons, overrideIsComputer){
   namePlate.textBaseline = "alphabetic";
   namePlate.x -= namePlate.getBounds().width /2;
   playerShape.addChild(namePlate);
-  
+
   //body
   var head = new createjs.Shape();
   head.graphics.beginFill(color).drawCircle(0, 0, 100);
