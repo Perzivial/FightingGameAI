@@ -1,12 +1,8 @@
 var walkSpeed = 1;
 var legMoveNumLimit = 50;
+var grav = .1;
 
-function updatePlayer(player){
-  moveLegs(player);
-}
-function gravity(player){
-
-}
+//cosmetic functions
 function moveLegs(player){
   if(player.legMoveDir){
     player.legMoveNum += walkSpeed * player.velX;
@@ -23,6 +19,27 @@ function moveLegs(player){
     }
   }
   player.legs.graphics.clear().setStrokeStyle(20).beginStroke("LightGrey").moveTo(0, 250).lineTo(50 - player.legMoveNum, 400).moveTo(0, 250).lineTo(-50 + player.legMoveNum, 400).endStroke();
+}
+
+function updatePlayer(player){
+  //movement
+  gravity(player);//needs to be first because this sets the grounded variable
+
+  //cosmetic
+  moveLegs(player);
+}
+//movement functions
+function gravity(player){
+  player.grounded = false;
+  player.velY += grav;
+  var testY = player.shape.x + player.velY;
+  if(player.shape.y + 400 > ground.y){
+    player.velY = 0;
+    player.shape.y = ground.y - 400;
+    player.grounded = true;
+  }else{
+    player.shape.y += player.velY;
+  }
 }
 function move(player){
   player.shape.x += player.velX;

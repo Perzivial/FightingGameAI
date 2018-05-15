@@ -23,7 +23,7 @@ function init() {
     stage = new createjs.Stage("canvas");
     addGround();
     addPlayer(200,200);
-    addPlayer(500,200);
+    addPlayer(500,250);
     //game loop reference
     createjs.Ticker.addEventListener("tick", handleTick);
     createjs.Ticker.framerate = 60;
@@ -34,7 +34,8 @@ function init() {
 function addGround(){
   //the ground covers 1/5 of the screen, and is at the bottom
   ground = new createjs.Shape();
-  ground.graphics.beginFill("grey").drawRect(0,(canvas.height/5)*4,canvas.width, (canvas.height/5));
+  ground.y = (canvas.height/5)*4;
+  ground.graphics.beginFill("grey").drawRect(0,0,canvas.width, (canvas.height/5));
   stage.addChild(ground);
 }
 
@@ -50,6 +51,7 @@ function addPlayer(x , y){
     hp: 100,
     velX: 0,
     velY: 0,
+    grounded : false,
     legs : null,
     legMoveNum: 0,
     legMoveDir : false
