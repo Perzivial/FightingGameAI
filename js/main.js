@@ -49,7 +49,10 @@ function addPlayer(x , y){
     shape: playerShape,
     hp: 100,
     velX: 0,
-    velY: 0
+    velY: 0,
+    legs : null,
+    legMoveNum: 0,
+    legMoveDir : false
   };
   //player model start
 
@@ -64,6 +67,7 @@ function addPlayer(x , y){
   var legs = new createjs.Shape();
   legs.graphics.setStrokeStyle(20).beginStroke("LightGrey").moveTo(0, 250).lineTo(50, 400).moveTo(0, 250).lineTo(-50, 400).endStroke();
   playerShape.addChild(legs);
+  player.legs = legs;
 
   //player model end
   players.push(player);
