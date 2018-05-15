@@ -90,7 +90,8 @@ function addPlayer(x , y, overrideButtons, overrideIsComputer){
     legs : null,
     legMoveNum: 0,
     legMoveDir : false,
-    color:null
+    color:null,
+    sword: null
   };
 
   var name = document.getElementById("name");
@@ -124,6 +125,11 @@ function addPlayer(x , y, overrideButtons, overrideIsComputer){
   legs.graphics.setStrokeStyle(20).beginStroke(color).moveTo(0, 250).lineTo(50, 400).moveTo(0, 250).lineTo(-50, 400).endStroke();
   playerShape.addChild(legs);
   player.legs = legs;
+
+  var sword = new createjs.Shape();
+  sword.graphics.setStrokeStyle(20).beginStroke(color).moveTo(0, 150).lineTo(50, 200).lineTo(75, 180).endStroke();
+  playerShape.addChild(sword);
+  player.sword = sword;
 
   //player model end
   players.push(player);

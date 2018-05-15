@@ -1,8 +1,9 @@
 var walkSpeed = 1;
 var legMoveNumLimit = 50;
-var grav = .2;
-var speedcap = 20;
-var accel = .5;
+var jump = 9;
+var grav = .4;
+var speedcap = 15;
+var accel = 1;
 var drag = .2;
 
 function updatePlayer(player){
@@ -48,10 +49,12 @@ function input(player,direction){
       }
     break;
     case DIRECTION_UP:
-
+      if(player.grounded){
+        player.velY -= jump;
+      }
     break;
     case DIRECTION_DOWN:
-
+      //some sort of mechanic to be mapped here
     break;
   }
 }
