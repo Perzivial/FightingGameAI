@@ -16,7 +16,7 @@ var Key = {
   UP: 38,
   RIGHT: 39,
   DOWN: 40,
-  SPACE: 32,
+  Q: 81,
 
   isDown: function(keyCode) {
     return this._pressed[keyCode];
@@ -102,7 +102,7 @@ function addPlayer(x , y, overrideButtons, overrideIsComputer){
     swordColor: randomColor(),
     namePlate: null,
     state: 0,
-    attackTimer: 0,
+    attackTimer: -attackCooldown,
     defendTimer: 0,
     hitbox: null,
     hitTimer: 0,

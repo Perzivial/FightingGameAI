@@ -11,7 +11,7 @@ function checkInputs(player){
   if (Key.isDown(Key.DOWN) && player.state == STATE_IDLE) {
     input(player,DIRECTION_DOWN);
   }
-  if (Key.isDown(Key.SPACE) && player.state == STATE_IDLE && player.attackTimer < -attackCooldown) {
+  if (Key.isDown(Key.Q) && player.state == STATE_IDLE && player.attackTimer < -attackCooldown) {
     player.state = STATE_ATTACK;
     player.attackTimer = attackLength;
     //make the sword swing (make arm longer and move pivot point)
