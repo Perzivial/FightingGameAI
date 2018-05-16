@@ -5,6 +5,7 @@
   <script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
   <script src="https://code.createjs.com/soundjs-0.6.2.min.js"></script></head>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.5.2/randomColor.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <!--My CSS-->
@@ -23,6 +24,7 @@
     <canvas id="canvas" style="background-color:darkgrey;"></canvas>
     <div style="width:30%;margin:10px;">
       <div style="display:none">
+
       <form>
         First name:
         <input id="name" type="text" name="name" value="">
@@ -36,16 +38,19 @@
       <button onclick="addPlayer(Math.random() * canvas.width,100);">Add</button>
     </div>
 
-    <button onclick="setupStage();preventDefault();">Reset</button>
+    <button id="soundToggle" onclick="toggleSound();">Enable Sound</button>
     <!-- <button onclick="debugger;">Debugger</button> -->
     <br>
     -
     <br>
+    <button onclick="setupStage();">Reset Positions</button>
     <button onclick="toggleHitboxes();">Show Hitboxes</button>
     <br>
     -
     <br>
-    <button onclick="recordedKeyDownEvents = [];">Reset Recorded Key Events</button>
+    <div id="container"></div>
+    <button onclick="downloadKeyEvents();">Download Recorded Key Events</button>
+    <button onclick="recordedKeyDownEvents = [];removeJsonLink();">Reset Recorded Key Events</button>
     </div>
   </body>
 

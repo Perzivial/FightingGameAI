@@ -172,12 +172,12 @@ function evaluateHit(player,other){
   if(other.state == STATE_DEFEND_1){
     player.hp -= attackStrength/2;
     player.attackTimer = 0;
-    createjs.Sound.play("block");
+    playSound("block");
   }else{
     other.hp -= attackStrength;
     other.hitTimer = hitCooldown;
     other.velX = (player.velX + other.velX) / 2;
-    createjs.Sound.play("hit");
+    playSound("hit");
   }
 }
 function drawHealth(player){

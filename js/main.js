@@ -3,6 +3,8 @@ var stage;
 var players = [];
 var ground;
 var lightBox;
+var soundEnabled = false;
+var soundsRegistered = false;
 
 var DIRECTION_LEFT = 0;
 var DIRECTION_RIGHT = 1;
@@ -53,7 +55,6 @@ function init() {
   //stage setup
   stage = new createjs.Stage("canvas");
   setupStage();
-  registerSounds();
   //game loop reference
   createjs.Ticker.addEventListener("tick", handleTick);
   createjs.Ticker.framerate = 60;
@@ -184,4 +185,15 @@ function registerSounds(){
   createjs.Sound.registerSound("sound/block.mp3", "block");
   createjs.Sound.registerSound("sound/hit.mp3", "hit");
   createjs.Sound.registerSound("sound/swing.mp3", "swing");
+}
+function playSound(soundID){
+  if(soundEnabled){
+    createjs.Sound.play(soundID);
+  }
+}
+function toggleSound(){
+  if(!soundsRegistered){registerSounds();soundsRegistered = true;}
+  soundEnabled = !soundEnabled;
+  var button = document.getElementById("soundToggle");
+  button.innerHTML = soundEnabled ? "Disable Sound" : "Enable Sound";
 }
