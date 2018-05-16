@@ -15,6 +15,7 @@ var Key = {
   UP: 38,
   RIGHT: 39,
   DOWN: 40,
+  SPACE: 32,
 
   isDown: function(keyCode) {
     return this._pressed[keyCode];
@@ -91,7 +92,12 @@ function addPlayer(x , y, overrideButtons, overrideIsComputer){
     legMoveNum: 0,
     legMoveDir : false,
     color:null,
-    sword: null
+    sword: null,
+    arm: null,
+    swordColor: randomColor(),
+    namePlate: null,
+    state: 0,
+    attackTimer: 0
   };
 
   var name = document.getElementById("name");
@@ -111,6 +117,7 @@ function addPlayer(x , y, overrideButtons, overrideIsComputer){
   namePlate.textBaseline = "alphabetic";
   namePlate.x -= namePlate.getBounds().width /2;
   playerShape.addChild(namePlate);
+  player.namePlate = namePlate;
 
   //body
   var head = new createjs.Shape();
@@ -122,12 +129,13 @@ function addPlayer(x , y, overrideButtons, overrideIsComputer){
   playerShape.addChild(body);
 
   var legs = new createjs.Shape();
-  legs.graphics.setStrokeStyle(20).beginStroke(color).moveTo(0, 250).lineTo(50, 400).moveTo(0, 250).lineTo(-50, 400).endStroke();
+  legs.graphics.setStrokeStyle(20).beginStroke(color).moveTo(0, 150).lineTo(-100,250).endStroke();
   playerShape.addChild(legs);
   player.legs = legs;
 
   var sword = new createjs.Shape();
-  sword.graphics.setStrokeStyle(20).beginStroke(color).moveTo(0, 150).lineTo(50, 200).lineTo(75, 180).endStroke();
+  sword.graphics.setStrokeStyle(20).beginStroke(color).moveTo(0, 150).lineTo(50, 200).lineTo(75, 175)
+  .setStrokeStyle(10).beginStroke(player.swordColor).moveTo(60, 160).lineTo(90, 190).moveTo(75, 175).lineTo(225,25).endStroke();
   playerShape.addChild(sword);
   player.sword = sword;
 

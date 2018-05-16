@@ -6,12 +6,20 @@ var speedcap = 15;
 var accel = 1;
 var drag = .2;
 
+var STATE_IDLE = 0;
+var STATE_ATTACK = 1;
+
+var attackLength = 15;
+var attackSpeed = 20;
+var attackCooldown  = 20;
+
 function updatePlayer(player){
   //check for input
   if(!player.isComputer){checkInputs(player);}
   //movement
   gravity(player);//needs to be first because this sets the grounded variable
   move(player);
+  attack(player);
   //cosmetic
   moveLegs(player);
 }
@@ -39,11 +47,19 @@ function move(player){
 function input(player,direction){
   switch(direction){
     case DIRECTION_LEFT:
+      player.shape.scaleX = -1;
+      player.namePlate.scaleX = -1;
+      if(player.namePlate.x < 0)
+        player.namePlate.x *= -1;
       if(player.velX > -speedcap){
         player.velX -= accel;
       }
     break;
     case DIRECTION_RIGHT:
+      player.shape.scaleX = 1;
+      player.namePlate.scaleX = 1;
+      if(player.namePlate.x > 0)
+        player.namePlate.x *= -1;
       if(player.velX < speedcap){
         player.velX += accel;
       }
@@ -56,5 +72,25 @@ function input(player,direction){
     case DIRECTION_DOWN:
       //some sort of mechanic to be mapped here
     break;
+  }
+}
+
+function attack(player){
+  if(player.attackTimer >= -attackCooldown)
+    player.attackTimer --;
+  if(player.state == STATE_ATTACK){
+    if(player.attackTimer < 0){
+      player.state = STATE_IDLE;
+      player.sword.graphics.clear();
+      player.sword.graphics.setStrokeStyle(20).beginStroke(player.color).moveTo(0, 150).lineTo(50, 200).lineTo(75, 175)
+      .setStrokeStyle(10).beginStroke(player.swordColor).moveTo(60, 160).lineTo(90, 190).moveTo(75, 175).lineTo(225,25).endStroke();
+      player.sword.x = 0;
+      player.sword.y = 0;
+      player.sword.rotation = 0;
+      player.sword.regX = 0;
+      player.sword.regY = 0;
+    }else{
+
+    }
   }
 }

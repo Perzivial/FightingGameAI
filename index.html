@@ -3,6 +3,7 @@
 <head>
   <!--Icons and imported stuff-->
   <script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.5.2/randomColor.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <!--My Javascript-->
@@ -17,7 +18,7 @@
   <body onload="init();" style="margin:0px;overflow: hidden;display:flex;">
     <canvas id="canvas" style="background-color:darkgrey;"></canvas>
     <div style="width:30%;margin:10px;">
-
+      <div style="display:none">
       <form>
         First name:
         <input id="name" type="text" name="name" value="">
@@ -28,12 +29,13 @@
         <input id="brightness" type="range" min="1" max="255" value="80">
         <br>
       </form>
-
       <button onclick="addPlayer(Math.random() * canvas.width,100);">Add</button>
-      <button onclick="setupStage();">Reset</button>
-      <br>
-      ----
-      <br>
+    </div>
+
+    <button onclick="setupStage();">Reset</button>
+    <br>
+    ----
+    <br>
 
     </div>
   </body>
