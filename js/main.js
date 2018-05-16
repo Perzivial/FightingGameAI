@@ -53,6 +53,7 @@ function init() {
   //stage setup
   stage = new createjs.Stage("canvas");
   setupStage();
+  registerSounds();
   //game loop reference
   createjs.Ticker.addEventListener("tick", handleTick);
   createjs.Ticker.framerate = 60;
@@ -177,4 +178,10 @@ function addPlayer(x , y, overrideButtons, overrideIsComputer){
   //player model end
   players.push(player);
   stage.addChild(playerShape);
+}
+
+function registerSounds(){
+  createjs.Sound.registerSound("sound/block.mp3", "block");
+  createjs.Sound.registerSound("sound/hit.mp3", "hit");
+  createjs.Sound.registerSound("sound/swing.mp3", "swing");
 }
