@@ -97,16 +97,16 @@ function addPlayer(x , y, overrideButtons, overrideIsComputer){
     swordColor: randomColor(),
     namePlate: null,
     state: 0,
-    attackTimer: 0
+    attackTimer: 0,
+    defendTimer: 0
   };
-
+  //building the player body
   var name = document.getElementById("name");
   var isComputer = document.getElementById("isComputer");
   player.isComputer = overrideButtons ? overrideIsComputer : isComputer.value;
   var brightness = overrideButtons ? (player.isComputer ? 50 : 240) : document.getElementById("brightness").value;
   var color = createjs.Graphics.getRGB(brightness, brightness, brightness, 1);
   player.color = color;
-  //player model start
 
   //nameplate
   if(name.value == "" || overrideButtons){

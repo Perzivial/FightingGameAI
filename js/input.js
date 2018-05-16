@@ -8,7 +8,7 @@ function checkInputs(player){
   if (Key.isDown(Key.UP)) {
     input(player,DIRECTION_UP);
   }
-  if (Key.isDown(Key.DOWN)) {
+  if (Key.isDown(Key.DOWN) && player.state == STATE_IDLE) {
     input(player,DIRECTION_DOWN);
   }
   if (Key.isDown(Key.SPACE) && player.state == STATE_IDLE && player.attackTimer < -attackCooldown) {
@@ -19,7 +19,7 @@ function checkInputs(player){
 
     player.sword.graphics.setStrokeStyle(20).beginStroke(player.color).moveTo(-40, 250).lineTo(75, 175)
     .setStrokeStyle(10).beginStroke(player.swordColor).moveTo(60, 160).lineTo(90, 190).moveTo(75, 175).lineTo(225,25).endStroke();
-    player.sword.y = 80;
+    player.sword.y = 40;
     player.sword.x = 120;
     player.sword.regX = -25;
     player.sword.regY = 100;

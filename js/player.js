@@ -2,16 +2,21 @@ var walkSpeed = 1;
 var legMoveNumLimit = 50;
 var jump = 9;
 var grav = .4;
-var speedcap = 15;
-var accel = 1;
+var speedcap = 20;
+var accel = 5;
 var drag = .2;
 
 var STATE_IDLE = 0;
 var STATE_ATTACK = 1;
+var STATE_DEFEND_1 = 2;
+var STATE_DEFEND_2 = 3;
 
 var attackLength = 15;
 var attackSpeed = 20;
 var attackCooldown  = 20;
+
+var defendLength = 20;
+var defendCooldown = 40;
 
 function updatePlayer(player){
   //check for input
@@ -20,6 +25,7 @@ function updatePlayer(player){
   gravity(player);//needs to be first because this sets the grounded variable
   move(player);
   attack(player);
+  defend(player);
   //cosmetic
   moveLegs(player);
 }
@@ -70,14 +76,21 @@ function input(player,direction){
       }
     break;
     case DIRECTION_DOWN:
-      //some sort of mechanic to be mapped here
+      player.defendTimer = defendLength;
+      player.state = STATE_DEFEND_1;
+      player.sword.y = 160;
+      player.sword.x = -40;
+      player.sword.regX = -25;
+      player.sword.regY = 100;
+      player.sword.rotation = -30;
     break;
   }
 }
 
 function attack(player){
-  if(player.attackTimer >= -attackCooldown)
+  if(player.attackTimer >= -attackCooldown-2){
     player.attackTimer --;
+  }
   if(player.state == STATE_ATTACK){
     if(player.attackTimer < 0){
       player.state = STATE_IDLE;
@@ -89,8 +102,29 @@ function attack(player){
       player.sword.rotation = 0;
       player.sword.regX = 0;
       player.sword.regY = 0;
-    }else{
-
     }
+  }
+}
+function defend(player){
+  switch(player.state){
+    case(STATE_DEFEND_1):
+      player.defendTimer --;
+      if(player.defendTimer < 0){
+        player.state = STATE_DEFEND_2;
+        player.sword.alpha = .5;
+      }
+    break;
+    case(STATE_DEFEND_2):
+      player.defendTimer --;
+      if(player.defendTimer < -defendCooldown-2){
+        player.state = STATE_IDLE;
+        player.sword.x = 0;
+        player.sword.y = 0;
+        player.sword.rotation = 0;
+        player.sword.regX = 0;
+        player.sword.regY = 0;
+        player.sword.alpha = 1;
+      }
+    break;
   }
 }
