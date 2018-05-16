@@ -163,12 +163,20 @@ function checkForHit(player){
       var y = player.shape.y + 165;
       var point = other.hitbox.globalToLocal(x, y);
       if(other.hitbox.hitTest(point.x,point.y) && player.state == STATE_ATTACK && other.hitTimer < 0){
-        other.hp -= attackStrength;
-        other.hitTimer = hitCooldown;
-        other.velX = (player.velX + other.velX) / 2;
+        evaluateHit(player,other);
       }
     }
   });
+}
+function evaluateHit(player,other){
+  if(other.state == STATE_DEFEND_1){
+    player.hp -= attackStrength/2;
+    player.attackTimer = 0;
+  }else{
+    other.hp -= attackStrength;
+    other.hitTimer = hitCooldown;
+    other.velX = (player.velX + other.velX) / 2;
+  }
 }
 function drawHealth(player){
   player.healthBarInner.graphics.clear();
