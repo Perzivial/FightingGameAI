@@ -115,6 +115,7 @@ function attack(player){
     player.attackTimer --;
   }
   if(player.state == STATE_ATTACK){
+    if(player.attackTimer == attackLength-5){playSound("swing");}
     if(player.attackTimer < 0){
       player.state = STATE_IDLE;
       player.sword.graphics.clear();

@@ -26,6 +26,5 @@ function checkInputs(player){
     //rotate down
     player.sword.rotation = 45;
     player.velX += attackSpeed * player.shape.scaleX;
-    playSound("swing");
   }
 }
