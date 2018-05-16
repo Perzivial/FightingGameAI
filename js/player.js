@@ -54,10 +54,18 @@ function move(player){
 }
 function wrap(player){
   if(player.shape.x > canvas.width + 50){
-    player.shape.x = -49;
+    if(player.velX > 0){
+      player.velX *= -1;
+    }
+    //player.shape.x = -49;
+    player.shape.x = canvas.width + 49;
   }
   else if(player.shape.x < - 50){
-    player.shape.x = canvas.width + 50;
+    if(player.velX < 0){
+      player.velX *= -1;
+    }
+    player.shape.x = -49
+    //player.shape.x = canvas.width + 49;
   }
 }
 function input(player,direction){
