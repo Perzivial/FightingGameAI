@@ -11,7 +11,7 @@
   <script type='text/javascript' src='js/main.js'></script>
   <script type='text/javascript' src='js/player.js'></script>
   <script type='text/javascript' src='js/animation.js'></script>
-
+  <script type='text/javascript' src='js/debug.js'></script>
 </head>
 <body>
 
@@ -32,12 +32,12 @@
       <button onclick="addPlayer(Math.random() * canvas.width,100);">Add</button>
     </div>
 
-    <button onclick="setupStage();">Reset</button>
+    <button onclick="setupStage();preventDefault();">Reset</button>
     <!-- <button onclick="debugger;">Debugger</button> -->
     <br>
     ----
     <br>
-
+    <button onclick="toggleHitboxes();">Show Hitboxes</button>
     </div>
   </body>
 

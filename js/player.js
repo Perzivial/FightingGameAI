@@ -13,10 +13,12 @@ var STATE_DEFEND_2 = 3;
 
 var attackLength = 15;
 var attackSpeed = 20;
-var attackCooldown  = 20;
+var attackCooldown  = 40;
 
 var defendLength = 20;
 var defendCooldown = 40;
+
+var hitCooldown = 30;
 
 function updatePlayer(player){
   //check for input
@@ -24,8 +26,10 @@ function updatePlayer(player){
   //movement
   gravity(player);//needs to be first because this sets the grounded variable
   move(player);
+  //attacking
   attack(player);
   defend(player);
+  checkForHit(player);
   //cosmetic
   moveLegs(player);
 }
@@ -104,7 +108,6 @@ function input(player,direction){
     break;
   }
 }
-
 function attack(player){
   if(player.attackTimer >= -attackCooldown-2){
     player.attackTimer --;
@@ -145,4 +148,22 @@ function defend(player){
       }
     break;
   }
+}
+function checkForHit(player){
+
+    if(player.hitTimer > -1){player.hitTimer --;}
+
+    players.forEach(function(other){
+      lightBox.alpha = 0;
+      if(other.hitTimer > hitCooldown - 3){lightBox.alpha += .5}
+      if(player != other){
+        var x = player.shape.x + 340 * player.shape.scaleX;
+        var y = player.shape.y + 165;
+        var point = other.hitbox.globalToLocal(x, y);
+        if(other.hitbox.hitTest(point.x,point.y) && player.state == STATE_ATTACK && other.hitTimer < 0){
+          other.hitTimer = hitCooldown;
+          other.velX = (player.velX + other.velX) / 2;
+        }
+      }
+    });
 }

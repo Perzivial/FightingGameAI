@@ -2,6 +2,7 @@ var canvas;
 var stage;
 var players = [];
 var ground;
+var lightBox;
 
 var DIRECTION_LEFT = 0;
 var DIRECTION_RIGHT = 1;
@@ -64,6 +65,10 @@ function setupStage(){
   players = [];
   addPlayer(200,ground.y-400, true, false);
   addPlayer(canvas.width-200,ground.y-400, true, true);
+  lightBox = new createjs.Shape();
+  lightBox.alpha = 0;
+  lightBox.graphics.beginFill("white").drawRect(0,0,canvas.width,canvas.height);
+  stage.addChild(lightBox);
 }
 
 function addGround(){
@@ -98,7 +103,9 @@ function addPlayer(x , y, overrideButtons, overrideIsComputer){
     namePlate: null,
     state: 0,
     attackTimer: 0,
-    defendTimer: 0
+    defendTimer: 0,
+    hitbox: null,
+    hitTimer: 0
   };
   //building the player body
   var name = document.getElementById("name");
@@ -138,7 +145,19 @@ function addPlayer(x , y, overrideButtons, overrideIsComputer){
   .setStrokeStyle(10).beginStroke(player.swordColor).moveTo(60, 160).lineTo(90, 190).moveTo(75, 175).lineTo(225,25).endStroke();
   playerShape.addChild(sword);
   player.sword = sword;
-  
+
+  var hitbox = new createjs.Shape();
+  hitbox.alpha = 0;
+  hitbox.graphics.beginFill("red").drawRect(-90,-60,180,450);
+  playerShape.addChild(hitbox);
+  hitbox.setBounds(-90,-60,180,450);
+  player.hitbox = hitbox;
+
+  // var attackArea = new createjs.Shape();
+  // hitbox.alpha = 0;
+  // attackArea.graphics.beginFill("red").drawCircle(340, 165, 10);
+  // playerShape.addChild(attackArea);
+
   //make the players face each other
   if(player.isComputer){
     player.shape.scaleX = -1;
