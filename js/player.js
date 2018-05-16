@@ -49,6 +49,16 @@ function move(player){
   player.velX += (player.velX > 0) ? -drag : drag;
   if(Math.abs(player.velX) < .25)
     player.velX = 0;
+
+  wrap(player);
+}
+function wrap(player){
+  if(player.shape.x > canvas.width + 50){
+    player.shape.x = -49;
+  }
+  else if(player.shape.x < - 50){
+    player.shape.x = canvas.width + 50;
+  }
 }
 function input(player,direction){
   switch(direction){
