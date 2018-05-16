@@ -138,6 +138,13 @@ function addPlayer(x , y, overrideButtons, overrideIsComputer){
   .setStrokeStyle(10).beginStroke(player.swordColor).moveTo(60, 160).lineTo(90, 190).moveTo(75, 175).lineTo(225,25).endStroke();
   playerShape.addChild(sword);
   player.sword = sword;
+  
+  //make the players face each other
+  if(player.isComputer){
+    player.shape.scaleX = -1;
+    player.namePlate.scaleX = -1;
+    player.namePlate.x *= -1;
+  }
 
   //player model end
   players.push(player);
