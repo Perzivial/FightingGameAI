@@ -14,6 +14,7 @@ var STATE_DEFEND_2 = 3;
 var attackLength = 15;
 var attackSpeed = 20;
 var attackCooldown  = 40;
+var attackStrength = 25;
 
 var defendLength = 20;
 var defendCooldown = 40;
@@ -31,6 +32,7 @@ function updatePlayer(player){
   defend(player);
   checkForHit(player);
   //cosmetic
+  drawHealth(player);
   moveLegs(player);
 }
 //movement functions
@@ -52,7 +54,7 @@ function move(player){
   //slow down by set amount and stop if below certain amount
   player.velX += (player.velX > 0) ? -drag : drag;
   if(Math.abs(player.velX) < .25)
-    player.velX = 0;
+  player.velX = 0;
 
   wrap(player);
 }
@@ -75,36 +77,36 @@ function wrap(player){
 function input(player,direction){
   switch(direction){
     case DIRECTION_LEFT:
-      player.shape.scaleX = -1;
-      player.namePlate.scaleX = -1;
-      if(player.namePlate.x < 0)
-        player.namePlate.x *= -1;
-      if(player.velX > -speedcap){
-        player.velX -= accel;
-      }
+    player.shape.scaleX = -1;
+    player.namePlate.scaleX = -1;
+    if(player.namePlate.x < 0)
+    player.namePlate.x *= -1;
+    if(player.velX > -speedcap){
+      player.velX -= accel;
+    }
     break;
     case DIRECTION_RIGHT:
-      player.shape.scaleX = 1;
-      player.namePlate.scaleX = 1;
-      if(player.namePlate.x > 0)
-        player.namePlate.x *= -1;
-      if(player.velX < speedcap){
-        player.velX += accel;
-      }
+    player.shape.scaleX = 1;
+    player.namePlate.scaleX = 1;
+    if(player.namePlate.x > 0)
+    player.namePlate.x *= -1;
+    if(player.velX < speedcap){
+      player.velX += accel;
+    }
     break;
     case DIRECTION_UP:
-      if(player.grounded){
-        player.velY -= jump;
-      }
+    if(player.grounded){
+      player.velY -= jump;
+    }
     break;
     case DIRECTION_DOWN:
-      player.defendTimer = defendLength;
-      player.state = STATE_DEFEND_1;
-      player.sword.y = 160;
-      player.sword.x = -40;
-      player.sword.regX = -25;
-      player.sword.regY = 100;
-      player.sword.rotation = -30;
+    player.defendTimer = defendLength;
+    player.state = STATE_DEFEND_1;
+    player.sword.y = 160;
+    player.sword.x = -40;
+    player.sword.regX = -25;
+    player.sword.regY = 100;
+    player.sword.rotation = -30;
     break;
   }
 }
@@ -129,41 +131,52 @@ function attack(player){
 function defend(player){
   switch(player.state){
     case(STATE_DEFEND_1):
-      player.defendTimer --;
-      if(player.defendTimer < 0){
-        player.state = STATE_DEFEND_2;
-        player.sword.alpha = .5;
-      }
+    player.defendTimer --;
+    if(player.defendTimer < 0){
+      player.state = STATE_DEFEND_2;
+      player.sword.alpha = .5;
+    }
     break;
     case(STATE_DEFEND_2):
-      player.defendTimer --;
-      if(player.defendTimer < -defendCooldown-2){
-        player.state = STATE_IDLE;
-        player.sword.x = 0;
-        player.sword.y = 0;
-        player.sword.rotation = 0;
-        player.sword.regX = 0;
-        player.sword.regY = 0;
-        player.sword.alpha = 1;
-      }
+    player.defendTimer --;
+    if(player.defendTimer < -defendCooldown-2){
+      player.state = STATE_IDLE;
+      player.sword.x = 0;
+      player.sword.y = 0;
+      player.sword.rotation = 0;
+      player.sword.regX = 0;
+      player.sword.regY = 0;
+      player.sword.alpha = 1;
+    }
     break;
   }
 }
 function checkForHit(player){
 
-    if(player.hitTimer > -1){player.hitTimer --;}
+  if(player.hitTimer > -1){player.hitTimer --;}
 
-    players.forEach(function(other){
-      lightBox.alpha = 0;
-      if(other.hitTimer > hitCooldown - 3){lightBox.alpha += .5}
-      if(player != other){
-        var x = player.shape.x + 340 * player.shape.scaleX;
-        var y = player.shape.y + 165;
-        var point = other.hitbox.globalToLocal(x, y);
-        if(other.hitbox.hitTest(point.x,point.y) && player.state == STATE_ATTACK && other.hitTimer < 0){
-          other.hitTimer = hitCooldown;
-          other.velX = (player.velX + other.velX) / 2;
-        }
+  players.forEach(function(other){
+    lightBox.alpha = 0;
+    if(other.hitTimer > hitCooldown - 3){lightBox.alpha += .5}
+    if(player != other){
+      var x = player.shape.x + 340 * player.shape.scaleX;
+      var y = player.shape.y + 165;
+      var point = other.hitbox.globalToLocal(x, y);
+      if(other.hitbox.hitTest(point.x,point.y) && player.state == STATE_ATTACK && other.hitTimer < 0){
+        other.hp -= attackStrength;
+        other.hitTimer = hitCooldown;
+        other.velX = (player.velX + other.velX) / 2;
       }
-    });
+    }
+  });
+}
+function drawHealth(player){
+  player.healthBarInner.graphics.clear();
+  if(player.hp > 0){
+    player.healthBarInner.graphics.beginFill(player.swordColor).drawRect(-100 * player.shape.scaleX,0,player.hp*2* player.shape.scaleX,20);
+  }else{
+    stage.removeChild(player.shape);
+    //do ml stuff here, before the player is destroyed
+    players.pop(player);
+  }
 }

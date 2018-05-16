@@ -105,7 +105,8 @@ function addPlayer(x , y, overrideButtons, overrideIsComputer){
     attackTimer: 0,
     defendTimer: 0,
     hitbox: null,
-    hitTimer: 0
+    hitTimer: 0,
+    healthBarInner: null
   };
   //building the player body
   var name = document.getElementById("name");
@@ -114,13 +115,25 @@ function addPlayer(x , y, overrideButtons, overrideIsComputer){
   var brightness = overrideButtons ? (player.isComputer ? 50 : 240) : document.getElementById("brightness").value;
   var color = createjs.Graphics.getRGB(brightness, brightness, brightness, 1);
   player.color = color;
+  //health bar
+  var healthBar = new createjs.Shape();
+  healthBar.alpha = .5;
+  healthBar.graphics.beginFill("black").drawRect(-100,0,200,20);
+  healthBar.y = - 127;
+  playerShape.addChild(healthBar);
+
+  var healthBarInner = new createjs.Shape();
+  healthBarInner.graphics;
+  healthBarInner.y = - 127;
+  playerShape.addChild(healthBarInner);
+  player.healthBarInner = healthBarInner;
 
   //nameplate
   if(name.value == "" || overrideButtons){
     name.value = player.isComputer ? "CPU" : "HMN";
   }
   var namePlate = new createjs.Text(name.value, "50px Arial", "white");
-  namePlate.y = - 120;
+  namePlate.y = - 140;
   namePlate.textBaseline = "alphabetic";
   namePlate.x -= namePlate.getBounds().width /2;
   playerShape.addChild(namePlate);
