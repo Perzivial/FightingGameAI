@@ -3,7 +3,7 @@ var stage;
 var players = [];
 var ground;
 var lightBox;
-var soundEnabled = false;
+var soundEnabled = true;
 var soundsRegistered = false;
 
 var DIRECTION_LEFT = 0;
@@ -27,6 +27,7 @@ var Key = {
   onKeydown: function(event) {
     this._pressed[event.keyCode] = true;
     recordEventKeyDown(event);
+    if(!soundsRegistered){registerSounds();soundsRegistered = true;}
   },
 
   onKeyup: function(event) {
@@ -192,7 +193,6 @@ function playSound(soundID){
   }
 }
 function toggleSound(){
-  if(!soundsRegistered){registerSounds();soundsRegistered = true;}
   soundEnabled = !soundEnabled;
   var button = document.getElementById("soundToggle");
   button.innerHTML = soundEnabled ? "Disable Sound" : "Enable Sound";

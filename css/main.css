@@ -1,5 +1,5 @@
 button {
-    background-color: #0099ff; /* Green */
+    background-color: #0099ff;
     border: none;
     color: white;
     padding: 5px;
@@ -11,4 +11,7 @@ button {
 }
 a{
   margin:5px;
+}
+.danger{
+  background-color: #ff5050;
 }

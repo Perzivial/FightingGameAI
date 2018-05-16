@@ -38,19 +38,19 @@
       <button onclick="addPlayer(Math.random() * canvas.width,100);">Add</button>
     </div>
 
-    <button id="soundToggle" onclick="toggleSound();">Enable Sound</button>
+    <button id="soundToggle" onclick="toggleSound();">Disable Sound</button>
     <!-- <button onclick="debugger;">Debugger</button> -->
     <br>
     -
     <br>
-    <button onclick="setupStage();">Reset Positions</button>
+    <button class="danger" onclick="setupStage();">Reset Positions</button>
     <button onclick="toggleHitboxes();">Show Hitboxes</button>
     <br>
     -
     <br>
     <div id="container"></div>
     <button onclick="downloadKeyEvents();">Download Recorded Key Events</button>
-    <button onclick="recordedKeyDownEvents = [];removeJsonLink();">Reset Recorded Key Events</button>
+    <button class="danger" onclick="recordedKeyDownEvents = [];removeJsonLink();">Reset Recorded Key Events</button>
     </div>
   </body>
 
