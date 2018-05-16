@@ -28,7 +28,7 @@ var Key = {
     //activate sound effects
     if(!soundsRegistered){registerSounds();soundsRegistered = true;}
     this._pressed[event.keyCode] = true;
-    recordEventKeyDown(event);
+    if(record){recordEventKeyDown(event);}
   },
 
   onKeyup: function(event) {

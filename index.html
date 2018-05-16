@@ -25,32 +25,40 @@
     <div style="width:30%;margin:10px;">
       <div style="display:none">
 
-      <form>
-        First name:
-        <input id="name" type="text" name="name" value="">
-        <br><br>
-        <input type="radio" id="isComputer" name="type" value="computer" checked> Computer
-        <!-- <input type="radio" id="isHuman" name="type" value="human"> Human (WASD)<br> -->
-        <p>Brightness:</p>
-        <input id="brightness" type="range" min="1" max="255" value="80">
-        <br>
-      </form>
-      <button onclick="addPlayer(Math.random() * canvas.width,100);">Add</button>
-    </div>
+        <form>
+          First name:
+          <input id="name" type="text" name="name" value="">
+          <br><br>
+          <input type="radio" id="isComputer" name="type" value="computer" checked> Computer
+          <!-- <input type="radio" id="isHuman" name="type" value="human"> Human (WASD)<br> -->
+          <p>Brightness:</p>
+          <input id="brightness" type="range" min="1" max="255" value="80">
+          <br>
+        </form>
+        <button onclick="addPlayer(Math.random() * canvas.width,100);">Add</button>
+      </div>
 
-    <button id="soundToggle" onclick="toggleSound();">Disable Sound</button>
-    <!-- <button onclick="debugger;">Debugger</button> -->
-    <br>
-    -
-    <br>
-    <button class="danger" onclick="setupStage();">Reset Positions</button>
-    <button onclick="toggleHitboxes();">Show Hitboxes</button>
-    <br>
-    -
-    <br>
-    <div id="container"></div>
-    <button onclick="downloadKeyEvents();">Download Recorded Key Events</button>
-    <button class="danger" onclick="recordedKeyDownEvents = [];removeJsonLink();">Reset Recorded Key Events</button>
+      <button id="soundToggle" onclick="toggleSound();">Disable Sound</button>
+      <!-- <button onclick="debugger;">Debugger</button> -->
+      <br>
+      -
+      <br>
+      <button class="danger" onclick="setupStage();">Reset Positions</button>
+      <button onclick="toggleHitboxes();">Show Hitboxes</button>
+      <br>
+      -
+      <br>
+      <button onclick="toggleRecord();" id="recordToggle">Start Recording</button>
+      <button onclick="copyKeyEvents();">Copy Json into Key Events Array</button>
+      <form>
+        Json Data: <br> <textarea type="text" name="data" id="jsonData" cols="40" rows="5"> </textarea><br>
+      </form>
+      <button onclick="downloadKeyEvents();">Copy Recorded Key Events into text</button>
+      <button class="danger" onclick="recordedKeyDownEvents = [];removeJsonLink();">Reset Recorded Key Events</button>
+      <br>
+      -
+      <br>
+      <button onclick="runDecisionTreeClassifier();">Run decision tree classifier</button>
     </div>
   </body>
 
