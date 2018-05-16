@@ -6,12 +6,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.5.2/randomColor.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!--My CSS-->
+  <link rel="stylesheet" type="text/css" href="css/main.css">
   <!--My Javascript-->
   <script type='text/javascript' src='js/input.js'></script>
   <script type='text/javascript' src='js/main.js'></script>
   <script type='text/javascript' src='js/player.js'></script>
   <script type='text/javascript' src='js/animation.js'></script>
   <script type='text/javascript' src='js/debug.js'></script>
+  <script type='text/javascript' src='js/ai.js'></script>
 </head>
 <body>
 
@@ -35,9 +38,13 @@
     <button onclick="setupStage();preventDefault();">Reset</button>
     <!-- <button onclick="debugger;">Debugger</button> -->
     <br>
-    ----
+    -
     <br>
     <button onclick="toggleHitboxes();">Show Hitboxes</button>
+    <br>
+    -
+    <br>
+    <button onclick="recordedKeyDownEvents = [];">Reset Recorded Key Events</button>
     </div>
   </body>
 

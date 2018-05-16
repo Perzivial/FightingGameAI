@@ -24,6 +24,7 @@ var Key = {
 
   onKeydown: function(event) {
     this._pressed[event.keyCode] = true;
+    recordEventKeyDown(event);
   },
 
   onKeyup: function(event) {
@@ -165,11 +166,6 @@ function addPlayer(x , y, overrideButtons, overrideIsComputer){
   playerShape.addChild(hitbox);
   hitbox.setBounds(-90,-60,180,450);
   player.hitbox = hitbox;
-
-  // var attackArea = new createjs.Shape();
-  // hitbox.alpha = 0;
-  // attackArea.graphics.beginFill("red").drawCircle(340, 165, 10);
-  // playerShape.addChild(attackArea);
 
   //make the players face each other
   if(player.isComputer){
