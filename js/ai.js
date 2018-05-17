@@ -56,7 +56,7 @@ function evaluateEffectiveness(labels, results){
 
 function toggleAutoLearn(){
   autoLearn = !autoLearn;
-   document.getElementById("autoLearnToggle").innerHTML = autoLearn ? "Turn off auto learn" : "Turn on auto learn";
+  document.getElementById("autoLearnToggle").innerHTML = autoLearn ? "Turn off auto learn" : "Turn on auto learn";
 }
 
 //actual ml stuff
@@ -97,6 +97,20 @@ function averageAccuracy(){
   var effectRound = Math.round(effectMean * 100) / 100;
   document.getElementById("effect").innerHTML = effectRound + "%";
 }
+function predict(features) {
+  features = ML.Matrix.checkMatrix(features);
+  var outputs = [];
+  var probabilities = fnn.propagate(features);
+  var keys = fnn.dicts.outputs;
+  for (var i = 0; i < probabilities[0].length; ++i) {
+    outputs.push({
+      chance:probabilities[0][i],
+      key:keys[i]
+    });
+  }
+
+  return outputs;
+}
 function assignInputs(player){
   if(players.length == 2 && fnn.model !== undefined){
     var data = [];
@@ -105,37 +119,43 @@ function assignInputs(player){
     arr.push(Math.abs(players[1].shape.x > players[0].shape.x));
     arr.push(players[1].velX);
     data.push(arr);
-    var result = fnn.predict(data);
+    //assuming there's only one cpu
+    var results = predict(data);
 
-    if (result == Key.RIGHT){
-      input(player,DIRECTION_RIGHT);
-    }
-    if (result == Key.LEFT) {
-      input(player,DIRECTION_LEFT);
-    }
-    if (result == Key.UP) {
-      input(player,DIRECTION_UP);
-    }
-    if (result == Key.DOWN && player.state == STATE_IDLE) {
-      input(player,DIRECTION_DOWN);
-    }
-    if (result == Key.Q && player.state == STATE_IDLE && player.attackTimer < -attackCooldown) {
-      player.state = STATE_ATTACK;
-      player.attackTimer = attackLength;
-      //make the sword swing (make arm longer and move pivot point)
-      player.sword.graphics.clear();
+    results.forEach(function(result){
 
-      player.sword.graphics.setStrokeStyle(20).beginStroke(player.color).moveTo(-40, 250).lineTo(75, 175)
-      .setStrokeStyle(10).beginStroke(player.swordColor).moveTo(60, 160).lineTo(90, 190).moveTo(75, 175).lineTo(225,25).endStroke();
-      player.sword.y = 40;
-      player.sword.x = 120;
-      player.sword.regX = -25;
-      player.sword.regY = 100;
-      //rotate down
-      player.sword.rotation = 45;
-      player.velX += attackSpeed * player.shape.scaleX;
+      if(result.chance > .3){
+        if (result.key == Key.RIGHT){
+          input(player,DIRECTION_RIGHT);
+        }
+        if (result.key == Key.LEFT) {
+          input(player,DIRECTION_LEFT);
+        }
+        if (result.key == Key.UP) {
+          input(player,DIRECTION_UP);
+        }
+        if (result.key == Key.DOWN && player.state == STATE_IDLE) {
+          input(player,DIRECTION_DOWN);
+        }
+        if (result.key == Key.Q && player.state == STATE_IDLE && player.attackTimer < -attackCooldown) {
+          player.state = STATE_ATTACK;
+          player.attackTimer = attackLength;
+          //make the sword swing (make arm longer and move pivot point)
+          player.sword.graphics.clear();
 
-    }
+          player.sword.graphics.setStrokeStyle(20).beginStroke(player.color).moveTo(-40, 250).lineTo(75, 175)
+          .setStrokeStyle(10).beginStroke(player.swordColor).moveTo(60, 160).lineTo(90, 190).moveTo(75, 175).lineTo(225,25).endStroke();
+          player.sword.y = 40;
+          player.sword.x = 120;
+          player.sword.regX = -25;
+          player.sword.regY = 100;
+          //rotate down
+          player.sword.rotation = 45;
+          player.velX += attackSpeed * player.shape.scaleX;
+
+        }
+      }
+    });
   }
 }
 function downloadModel(){

@@ -70,14 +70,14 @@ function move(player){
   wrap(player);
 }
 function wrap(player){
-  if(player.shape.x > canvas.width + 50){
+  if(player.shape.x > canvas.width + 120){
     // if(player.velX > 0){
     //   player.velX *= -1;
     // }
     player.shape.x = -49;
     //player.shape.x = canvas.width + 49;
   }
-  else if(player.shape.x < - 50){
+  else if(player.shape.x < - 120){
     // if(player.velX < 0){
     //   player.velX *= -1;
     // }
@@ -183,13 +183,15 @@ function checkForHit(player){
 }
 function evaluateHit(player,other){
   if(other.state == STATE_DEFEND_1){
+    player.velX *= -1;
     player.hp -= attackStrength/2;
     player.attackTimer = 0;
     playSound("block");
   }else{
     other.hp -= attackStrength;
     other.hitTimer = hitCooldown;
-    other.velX = (player.velX + other.velX) / 2;
+    var playerMomentumBias = 2;
+    other.velX = (player.velX * playerMomentumBias + other.velX) / 2;
     playSound("hit");
   }
 }
@@ -214,8 +216,8 @@ function bounceOffOtherPlayers(player){
   if(players.length == 2){
     var me = player.isComputer ? 1 : 0;
     var other = !player.isComputer ? 1 : 0;
-    if(Math.abs(players[me].shape.x - players[other].shape.x) < tooClose){
-      if(players[me].shape.x > players[other].shape.x){
+    if(Math.abs(players[me].shape.x - players[other].shape.x) < tooClose && players[me].state == STATE_IDLE && players[other].state == STATE_IDLE){
+      if(players[me].shape.x > players[other].shape.x ){
         players[me].velX = 1;
         players[other].velX = -1;
       }else{
