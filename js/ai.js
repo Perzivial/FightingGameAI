@@ -11,6 +11,7 @@ function recordEventKeyDown(event){
       //list of values
       dist: Math.floor(Math.abs(player.shape.x - cpu.shape.x)),
       toTheRight: cpu.shape.x > player.shape.x,
+      velX: player.velX,
       //the label
       eventKeyCode: event.keyCode
     };
@@ -72,6 +73,7 @@ function runClassifier(){
       var arr = [];
       arr.push(Math.floor(evt.dist));
       arr.push(Math.floor(evt.toTheRight));
+      arr.push(evt.velX);
       data.push(arr);
       labels.push(evt.eventKeyCode);
     });
@@ -101,6 +103,7 @@ function assignInputs(player){
     var arr = [];
     arr.push(Math.floor(players[1].shape.x - players[0].shape.x));
     arr.push(Math.abs(players[1].shape.x > players[0].shape.x));
+    arr.push(players[1].velX);
     data.push(arr);
     var result = fnn.predict(data);
 

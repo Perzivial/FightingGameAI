@@ -34,6 +34,7 @@ function updatePlayer(player){
   if(player.isComputer){assignInputs(player);}
   //movement
   gravity(player);//needs to be first because this sets the grounded variable
+  bounceOffOtherPlayers(player);
   move(player);
   //attacking
   attack(player);
@@ -63,7 +64,9 @@ function move(player){
   player.velX += (player.velX > 0) ? -drag : drag;
   if(Math.abs(player.velX) < .25)
   player.velX = 0;
-
+  if(Math.abs(player.velX) > speedcap*2){
+    player.velX = player.velX < 0? -speedcap*2: speedcap*2;
+  }
   wrap(player);
 }
 function wrap(player){
@@ -171,7 +174,8 @@ function checkForHit(player){
       var x = player.shape.x + 340 * player.shape.scaleX;
       var y = player.shape.y + 165;
       var point = other.hitbox.globalToLocal(x, y);
-      if(other.hitbox.hitTest(point.x,point.y) && player.state == STATE_ATTACK && other.hitTimer < 0){
+      var point2 = other.hitbox.globalToLocal(player.shape.x, player.shape.y+165);
+      if((other.hitbox.hitTest(point.x,point.y) || other.hitbox.hitTest(point2.x,point2.y)) && player.state == STATE_ATTACK && other.hitTimer < 0){
         evaluateHit(player,other);
       }
     }
@@ -202,6 +206,22 @@ function drawHealth(player){
     players.pop(player);
     if(autoReset){
       setupStage();
+    }
+  }
+}
+var tooClose = 50;
+function bounceOffOtherPlayers(player){
+  if(player.length == 2){
+    var me = player.isComputer ? 1 : 0;
+    var other = !player.isComputer ? 1 : 0;
+    if(Math.abs(players[me].shape.x - players[other].shape.x) < tooClose){
+      if(players[me].shape.x > players[other].shape.x){
+        players[me].velX = 1;
+        players[other].velX = -1;
+      }else{
+        players[me].velX = -1;
+        players[other].velX = 1;
+      }
     }
   }
 }
