@@ -52,7 +52,7 @@
       <button onclick="toggleRecord();" id="recordToggle">Start Recording</button>
       <button class="success" onclick="copyKeyEvents();">Copy Json into Key Events Array</button>
       <form>
-        Json Data: <br> <textarea type="text" name="data" id="jsonData" cols="40" rows="5"></textarea><br>
+        Data: <br> <textarea type="text" name="data" id="jsonData" cols="40" rows="5"></textarea><br>
       </form>
       <button onclick="downloadKeyEvents();">Copy Recorded Key Events into text</button>
       <button class="danger" onclick="recordedKeyDownEvents = [];removeJsonLink();">Reset Recorded Key Events</button>
@@ -62,6 +62,9 @@
       <button class="success" onclick="runClassifier();">Run decision tree classifier</button>
       <br>
       <button onclick="averageAccuracy();">Get average accuracy</button><a id="effect"></a>
+      <br>
+      <button onclick="downloadModel();">Turn Model into text</button>
+      <button onclick="uploadModel();">Load Model from text</button>
       <br>
       -
       <br>

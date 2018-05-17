@@ -141,3 +141,12 @@ function assignInputs(player){
     }
   }
 }
+function downloadModel(){
+  var jsonData = JSON.stringify(fnn);
+  document.getElementById("jsonData").value = jsonData;
+}
+function uploadModel(){
+  var jsonData = document.getElementById("jsonData").value;
+  model = JSON.parse(jsonData);
+  fnn = ML.FNN.load(model);
+}
