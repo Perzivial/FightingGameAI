@@ -69,8 +69,11 @@ function setupStage(){
   stage.removeAllChildren();
   addGround();
   players = [];
-  addPlayer(200,ground.y-400, true, false);
-  addPlayer(canvas.width-200,ground.y-400, true, true);
+  var rand = (Math.random() > .5);
+  var rightSide = canvas.width-200;
+  var leftSide = 200;
+  addPlayer(rand ? rightSide:leftSide,ground.y-400, true, false, rand);
+  addPlayer(rand ? leftSide:rightSide,ground.y-400, true, true, !rand);
   lightBox = new createjs.Shape();
   lightBox.alpha = 0;
   lightBox.graphics.beginFill("white").drawRect(0,0,canvas.width,canvas.height);
@@ -85,7 +88,7 @@ function addGround(){
   stage.addChild(ground);
 }
 
-function addPlayer(x , y, overrideButtons, overrideIsComputer){
+function addPlayer(x , y, overrideButtons, overrideIsComputer, rightSide){
 
   var playerShape = new createjs.Container();
 
@@ -173,7 +176,7 @@ function addPlayer(x , y, overrideButtons, overrideIsComputer){
   player.hitbox = hitbox;
 
   //make the players face each other
-  if(player.isComputer){
+  if(rightSide){
     player.shape.scaleX = -1;
     player.namePlate.scaleX = -1;
     player.namePlate.x *= -1;

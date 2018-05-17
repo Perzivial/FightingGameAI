@@ -9,7 +9,8 @@ function recordEventKeyDown(event){
     var cpu = players[1];
     var keyDownEventData = {
       //list of values
-      dist: player.shape.x - cpu.shape.x,
+      dist: Math.abs(player.shape.x - cpu.shape.x),
+      toTheRight: cpu.shape.x > player.shape.x,
       playerY: player.shape.y,
       cpuY: cpu.shape.y,
       playerState: player.state,
@@ -67,13 +68,14 @@ var data;
 var labels;
 var splitData;
 var splitLabels;
-function runDecisionTreeClassifier(){
+function runClassifier(){
   if(recordedKeyDownEvents.length > 0){
     data = [];
     labels = [];
     recordedKeyDownEvents.forEach(function(evt){
       var arr = [];
       arr.push(Math.floor(evt.dist));
+      arr.push(Math.floor(evt.toTheRight));
       arr.push(Math.floor(evt.playerY));
       arr.push(Math.floor(evt.cpuY));
       arr.push(evt.playerState);
@@ -106,6 +108,7 @@ function assignInputs(player){
     var data = [];
     var arr = [];
     arr.push(Math.floor(players[1].shape.x - players[0].shape.x));
+    arr.push(Math.abs(players[1].shape.x > players[0].shape.x));
     arr.push(Math.floor(players[1].shape.y));
     arr.push(Math.floor(players[0].shape.y));
     arr.push(players[1].state);

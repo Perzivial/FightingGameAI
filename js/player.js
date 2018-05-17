@@ -189,6 +189,9 @@ function drawHealth(player){
   }else{
     stage.removeChild(player.shape);
     //do ml stuff here, before the player is destroyed
+    if(autoLearn){
+      runClassifier();
+    }
     players.pop(player);
   }
 }
