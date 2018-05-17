@@ -10,9 +10,7 @@ function getAiData(){
   var keyDownEventData = {
     //list of values
     dist: Math.abs(player.shape.x - cpu.shape.x),
-    toTheRight: cpu.shape.x > player.shape.x,
-    playerState: player.state,
-    cpuState: cpu.state,
+    toTheRight: cpu.shape.x > player.shape.x
   };
 }
 }

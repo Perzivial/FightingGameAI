@@ -21,6 +21,13 @@ var defendCooldown = 40;
 
 var hitCooldown = 30;
 
+var autoReset = false;
+
+function toggleAutoReset(){
+  autoReset = !autoReset;
+  document.getElementById("autoResetToggle").innerHTML = autoReset ? "Disable Auto Reset" : "Enable Auto Reset";
+}
+
 function updatePlayer(player){
   //check for input
   if(!player.isComputer){checkInputs(player);}
@@ -61,18 +68,18 @@ function move(player){
 }
 function wrap(player){
   if(player.shape.x > canvas.width + 50){
-    if(player.velX > 0){
-      player.velX *= -1;
-    }
-    //player.shape.x = -49;
-    player.shape.x = canvas.width + 49;
+    // if(player.velX > 0){
+    //   player.velX *= -1;
+    // }
+    player.shape.x = -49;
+    //player.shape.x = canvas.width + 49;
   }
   else if(player.shape.x < - 50){
-    if(player.velX < 0){
-      player.velX *= -1;
-    }
-    player.shape.x = -49
-    //player.shape.x = canvas.width + 49;
+    // if(player.velX < 0){
+    //   player.velX *= -1;
+    // }
+    //player.shape.x = -49
+    player.shape.x = canvas.width + 49;
   }
 }
 function input(player,direction){
@@ -193,5 +200,8 @@ function drawHealth(player){
       runClassifier();
     }
     players.pop(player);
+    if(autoReset){
+      setupStage();
+    }
   }
 }
