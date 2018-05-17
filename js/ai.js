@@ -9,10 +9,8 @@ function recordEventKeyDown(event){
     var cpu = players[1];
     var keyDownEventData = {
       //list of values
-      dist: Math.abs(player.shape.x - cpu.shape.x),
+      dist: Math.floor(Math.abs(player.shape.x - cpu.shape.x)),
       toTheRight: cpu.shape.x > player.shape.x,
-      playerY: player.shape.y,
-      cpuY: cpu.shape.y,
       playerState: player.state,
       cpuState: cpu.state,
       //the label
@@ -76,8 +74,6 @@ function runClassifier(){
       var arr = [];
       arr.push(Math.floor(evt.dist));
       arr.push(Math.floor(evt.toTheRight));
-      arr.push(Math.floor(evt.playerY));
-      arr.push(Math.floor(evt.cpuY));
       arr.push(evt.playerState);
       arr.push(evt.cpuState);
       data.push(arr);
@@ -109,8 +105,6 @@ function assignInputs(player){
     var arr = [];
     arr.push(Math.floor(players[1].shape.x - players[0].shape.x));
     arr.push(Math.abs(players[1].shape.x > players[0].shape.x));
-    arr.push(Math.floor(players[1].shape.y));
-    arr.push(Math.floor(players[0].shape.y));
     arr.push(players[1].state);
     arr.push(players[0].state);
     data.push(arr);

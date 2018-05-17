@@ -39,6 +39,7 @@ var Key = {
 
 function handleTick(event) {
   if (!event.paused) {
+    getAiData();
     players.forEach(function(player){
       updatePlayer(player);
     });
