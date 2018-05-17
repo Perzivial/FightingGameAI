@@ -6,6 +6,7 @@
   <script src="https://code.createjs.com/soundjs-0.6.2.min.js"></script></head>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.5.2/randomColor.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://www.lactame.com/lib/ml/3.2.0/ml.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <!--My CSS-->
@@ -49,16 +50,22 @@
       -
       <br>
       <button onclick="toggleRecord();" id="recordToggle">Start Recording</button>
-      <button onclick="copyKeyEvents();">Copy Json into Key Events Array</button>
+      <button class="success" onclick="copyKeyEvents();">Copy Json into Key Events Array</button>
       <form>
-        Json Data: <br> <textarea type="text" name="data" id="jsonData" cols="40" rows="5"> </textarea><br>
+        Json Data: <br> <textarea type="text" name="data" id="jsonData" cols="40" rows="5"></textarea><br>
       </form>
       <button onclick="downloadKeyEvents();">Copy Recorded Key Events into text</button>
       <button class="danger" onclick="recordedKeyDownEvents = [];removeJsonLink();">Reset Recorded Key Events</button>
       <br>
       -
       <br>
-      <button onclick="runDecisionTreeClassifier();">Run decision tree classifier</button>
+      <button class="success" onclick="runDecisionTreeClassifier();">Run decision tree classifier</button>
+      <br>
+      <button onclick="averageAccuracy();">Get average accuracy</button><a id="effect"></a>
+      <br>
+      -
+      <br>
+      <button class="success" onclick="toggleAutoLearn();" id="autoLearnToggle">Turn on auto learn</button>
     </div>
   </body>
 

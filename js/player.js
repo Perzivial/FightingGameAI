@@ -24,6 +24,7 @@ var hitCooldown = 30;
 function updatePlayer(player){
   //check for input
   if(!player.isComputer){checkInputs(player);}
+  if(player.isComputer){assignInputs(player);}
   //movement
   gravity(player);//needs to be first because this sets the grounded variable
   move(player);

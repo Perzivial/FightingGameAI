@@ -28,6 +28,7 @@ var Key = {
     //activate sound effects
     if(!soundsRegistered){registerSounds();soundsRegistered = true;}
     this._pressed[event.keyCode] = true;
+    if(event.keyCode == Key.LEFT || event.keyCode == Key.RIGHT || event.keyCode == Key.UP || event.keyCode == Key.DOWN || event.keyCode == Key.Q)
     if(record){recordEventKeyDown(event);}
   },
 
