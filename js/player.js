@@ -209,9 +209,9 @@ function drawHealth(player){
     }
   }
 }
-var tooClose = 50;
+var tooClose = 80;
 function bounceOffOtherPlayers(player){
-  if(player.length == 2){
+  if(players.length == 2){
     var me = player.isComputer ? 1 : 0;
     var other = !player.isComputer ? 1 : 0;
     if(Math.abs(players[me].shape.x - players[other].shape.x) < tooClose){
